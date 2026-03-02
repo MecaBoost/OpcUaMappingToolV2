@@ -4,7 +4,10 @@ namespace OpcUaMappingTool.Backend.Models
     {
         public bool Success { get; set; }
         public int MappedCount { get; set; }
-        public string Message { get; set; } = string.Empty;
+        public int TotalVariables { get; set; }
+        public int UnmappedCount => TotalVariables - MappedCount;
+        public List<string> UnmappedVariables { get; set; } = [];
+        public string? Message { get; set; }
         public byte[]? OutputXmlBytes { get; set; }
     }
 

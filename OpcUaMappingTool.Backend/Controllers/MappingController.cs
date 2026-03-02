@@ -93,7 +93,16 @@ namespace OpcUaMappingTool.Backend.Controllers
                 if (result.Success && result.OutputXmlBytes != null)
                 {
                     _logger.LogInformation("Génération terminée avec succès. Fichier prêt à être téléchargé.");
-                    return File(result.OutputXmlBytes, "application/xml", "urn.ComapanMeca4_Automated.xml");
+                    return Ok(new
+                    {
+                        result.Success,
+                        result.Message,
+                        result.MappedCount,
+                        result.TotalVariables,
+                        result.UnmappedCount,
+                        result.UnmappedVariables,
+                        FileBase64 = Convert.ToBase64String(result.OutputXmlBytes)
+                    });
                 }
 
                 _logger.LogWarning("La génération du mapping a échoué : {Message}", result.Message);

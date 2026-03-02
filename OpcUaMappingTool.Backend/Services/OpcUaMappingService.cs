@@ -41,12 +41,15 @@ namespace OpcUaMappingTool.Backend.Services
                                    .ToDictionary(e => e.Attribute("NodeId")!.Value, e => e);
 
                 int mappedCount = 0;
+                int totalVariables = 0;
+                var unmappedVariables = new List<string>();
                 var visitedNodeIds = new HashSet<string>();
 
                 foreach (XElement varElement in doc.Descendants(UAVariableName))
                 {
                     // Optionnel : on pourrait vérifier ici si l'extension "semantica" existe déjà.
                     
+                    totalVariables++;
                     string initialBrowseName = varElement.Attribute("BrowseName")?.Value ?? string.Empty;
                     var pathComponents = new List<string> { OpcUaXmlHelper.GetCleanName(initialBrowseName) }; 
                     
@@ -98,8 +101,14 @@ namespace OpcUaMappingTool.Backend.Services
                         }
                         else
                         {
+                            unmappedVariables.Add(initialBrowseName);
                             _logger.LogTrace("Pas de Datapoint trouvé dans le JSON pour : Connexion={Conn}, Path={Path}", jsonConnName, fullJsonPath);
                         }
+                    }
+                    else
+                    {
+                        unmappedVariables.Add(initialBrowseName);
+                        _logger.LogTrace("Aucun périphérique racine trouvé pour la variable OPC UA : {VarName}", initialBrowseName);
                     }
                 }
                 
@@ -109,9 +118,11 @@ namespace OpcUaMappingTool.Backend.Services
 
                 return new MappingResult 
                 { 
-                    Success = true, 
-                    MappedCount = mappedCount, 
-                    Message = "Traitement terminé avec succès.",
+                    Success = true,
+                    MappedCount = mappedCount,
+                    TotalVariables = totalVariables,
+                    UnmappedVariables = unmappedVariables,
+                    Message = $"Mapping terminé : {mappedCount}/{totalVariables} variables mappées.",
                     OutputXmlBytes = memoryStream.ToArray()
                 };
             }

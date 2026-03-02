@@ -228,10 +228,41 @@ btnGenerate.addEventListener('click', async () => {
             throw new Error(errorMsg);
         }
 
-        const blob = await response.blob();
+        const data = await response.json();
         
+        showMessage(
+            `✅ ${data.mappedCount} / ${data.totalVariables} variables mappées.
+        ❌ ${data.unmappedCount} non mappées.`,
+            true
+        );
+
+        const unmappedDiv = document.getElementById("unmappedList");
+
+        if (data.unmappedVariables && data.unmappedVariables.length > 0) {
+            unmappedDiv.innerHTML = `
+                <div class="alert alert-warning mt-3">
+                    <strong>Variables non mappées :</strong>
+                    <ul class="mb-0">
+                        ${data.unmappedVariables.map(v => `<li>${v}</li>`).join("")}
+                    </ul>
+                </div>
+            `;
+        } else {
+            unmappedDiv.innerHTML = "";
+        }
+
+        const byteCharacters = atob(data.fileBase64);
+        const byteNumbers = new Array(byteCharacters.length);
+
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "application/xml" });
+
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
         a.download = "urn.ComapanMeca4_Automated.xml";
         document.body.appendChild(a);
