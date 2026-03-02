@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace OpcUaMappingTool.Web.Models.Dtos
+namespace OpcUaMappingTool.Backend.Models.Dtos
 {
     public record JsonRoot(
         [property: JsonPropertyName("configs")] List<JsonConfigWrapper> Configs

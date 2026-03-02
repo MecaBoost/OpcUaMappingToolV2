@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using OpcUaMappingTool.Web.Models.Dtos;
-using OpcUaMappingTool.Web.Utils;
+using OpcUaMappingTool.Backend.Utils;
+using OpcUaMappingTool.Backend.Services.Interfaces;
+using OpcUaMappingTool.Backend.Models.Dtos;
 
 namespace OpcUaMappingTool.Backend.Services
 {
-    public class OpcUaAssetExtractionServiceV2
+    public class OpcUaAssetExtractionService : IOpcUaAssetExtractionService
     {
         private static readonly XNamespace NsUa = "http://opcfoundation.org/UA/2011/03/UANodeSet.xsd";
         private static readonly XName UAObjectName = NsUa + "UAObject";

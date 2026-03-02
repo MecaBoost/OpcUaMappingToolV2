@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.Extensions.Logging;
 using OpcUaMappingTool.Backend.Services.Interfaces;
 using OpcUaMappingTool.Backend.Utils;
+using OpcUaMappingTool.Backend.Models.Dtos;
+using OpcUaMappingTool.Backend.Models;
 
 namespace OpcUaMappingTool.Backend.Services
 {
