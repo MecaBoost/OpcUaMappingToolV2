@@ -1,166 +1,186 @@
 /* =========================================================
-   Thème : Dashboard Industriel / OpcUa Mapping Tool
+   Thème : Dashboard Industriel Premium (Style Siemens/Edge)
    ========================================================= */
 
 :root {
-  /* Palette de couleurs basée sur les interfaces Edge/Databus */
-  --primary-color: #007a88; /* Accent (ex: Teal/Cyan industriel) */
-  --primary-hover: #005f6b;
-  --bg-color: #f4f7f9;
-  --card-bg: #ffffff;
-  --text-main: #2d3748;
-  --text-muted: #718096;
-  --border-color: #e2e8f0;
-  --success-color: #38a169;
-  --danger-color: #e53e3e;
-  --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+    --brand-dark: #1e293b;     /* Bleu nuit profond pour le header */
+    --brand-primary: #0284c7;  /* Bleu tech pour les actions principales */
+    --brand-hover: #0369a1;
+    --bg-body: #f1f5f9;        /* Gris très clair pour le fond */
+    --surface-white: #ffffff;
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --border-light: #e2e8f0;
+    --success-color: #10b981;  /* Vert vif et moderne */
+    --danger-color: #ef4444;
 }
 
-/* --- Base --- */
 body {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  margin: 0;
-  padding: 24px;
-  line-height: 1.5;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
 }
 
-/* --- Conteneurs & Cartes --- */
-.container, #app, main {
-  max-width: 1200px;
-  margin: 0 auto;
+.main-container {
+    max-width: 1050px !important;
 }
 
-.card, section, .panel, div[id$="-section"] {
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  box-shadow: var(--shadow-md);
-  padding: 24px;
-  margin-bottom: 24px;
-  border: 1px solid var(--border-color);
+/* --- Header --- */
+.app-header {
+    background-color: var(--brand-dark);
+    padding: 1.2rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid var(--brand-primary);
+}
+.app-header h3 {
+    letter-spacing: -0.5px;
 }
 
-/* --- Typographie --- */
-h1, h2, h3 {
-  color: var(--text-main);
-  font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 1rem;
+/* --- Cartes (Panneaux de contenu) --- */
+.card {
+    background: var(--surface-white);
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06) !important;
 }
 
-h1 { font-size: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
-h2 { font-size: 1.25rem; color: var(--primary-color); }
+/* Titres des cartes et Badges d'étape */
+.card-title {
+    color: var(--brand-dark);
+    font-weight: 600;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-light);
+    padding-bottom: 15px;
+}
+.step-badge {
+    background-color: var(--brand-primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    margin-right: 12px;
+    box-shadow: 0 2px 4px rgba(2, 132, 199, 0.3);
+}
+
+/* --- Inputs et Selects --- */
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.form-control, .form-select {
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    outline: none;
+}
+.form-select:disabled {
+    background-color: #e2e8f0;
+    cursor: not-allowed;
+}
+
+/* --- Tableau Custom (Style Datagrid) --- */
+.custom-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.custom-table thead th {
+    background-color: #f8fafc;
+    border-bottom: 2px solid var(--border-light);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 16px;
+}
+.custom-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+.custom-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.custom-table tbody tr:hover td {
+    background-color: #f1f5f9;
+}
+.input-row td {
+    background-color: #f8fafc;
+}
 
 /* --- Boutons --- */
-button, .btn {
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-sm);
+.btn {
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+#btnGenerate {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    font-size: 1.1rem;
+}
+#btnGenerate:hover {
+    background-color: var(--brand-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(2, 132, 199, 0.2) !important;
 }
 
-button:hover, .btn:hover {
-  background-color: var(--primary-hover);
-  box-shadow: var(--shadow-md);
+/* Bouton "+" rond et design */
+.btn-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+.btn-action:hover {
+    transform: scale(1.1);
 }
 
-button:disabled {
-  background-color: var(--text-muted);
-  cursor: not-allowed;
-  box-shadow: none;
+/* --- Messages de statut et Alertes --- */
+.status-text {
+    font-weight: 500;
 }
-
-/* --- Formulaires --- */
-input[type="text"], 
-input[type="number"], 
-input[type="password"],
-select, 
-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  font-size: 14px;
-  color: var(--text-main);
-  box-sizing: border-box;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  background-color: #fff;
+#resultMessage {
+    border-radius: 8px;
+    font-weight: 600;
+    border-left: 5px solid transparent;
 }
-
-input:focus, select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 122, 136, 0.15);
+.alert-success {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border-left-color: var(--success-color);
 }
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--text-main);
-}
-
-.form-group, .input-group, div > label {
-  margin-bottom: 16px;
-  display: block;
-}
-
-/* --- Tables (Crucial pour le Mapping OPC UA) --- */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 16px;
-  background-color: var(--card-bg);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-color);
-  font-size: 14px;
-}
-
-th {
-  background-color: #f8fafc;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 12px;
-}
-
-tr:hover td {
-  background-color: #f1f5f9;
-}
-
-/* --- Messages de statut --- */
-.status-success, .alert-success { 
-  color: var(--success-color); 
-  background-color: #e6ffed;
-  padding: 10px;
-  border-radius: 4px;
-  border-left: 4px solid var(--success-color);
-}
-
-.status-error, .alert-error { 
-  color: var(--danger-color); 
-  background-color: #fff5f5;
-  padding: 10px;
-  border-radius: 4px;
-  border-left: 4px solid var(--danger-color);
+.alert-danger {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border-left-color: var(--danger-color);
 }
