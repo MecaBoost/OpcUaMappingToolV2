@@ -31,8 +31,10 @@ namespace OpcUaMappingTool.Backend.Services
             options ??= new MappingInjectionOptions();
             try
             {
+                _logger.LogInformation("Début de ProcessMappingAsync. Configuration de {Count} mappings de périphériques.", deviceMapping.Count);
                 var jsonVars = await LoadJsonVariablesAsync(jsonStream);
                 var doc = await XDocument.LoadAsync(xmlInputStream, LoadOptions.None, default);
+                _logger.LogInformation("{Count} variables JSON (Datapoints) chargées en mémoire.", jsonVars.Count);
 
                 var nodesById = doc.Descendants()
                                    .Where(e => e.Attribute("NodeId") != null)
@@ -90,12 +92,18 @@ namespace OpcUaMappingTool.Backend.Services
 
                         if (jsonVars.TryGetValue((jsonConnName, fullJsonPath), out string? dataType))
                         {
+                            _logger.LogDebug("Correspondance trouvée ! Injection pour {VarName} (JSON: {JsonPath})", initialBrowseName, fullJsonPath);
                             InjectMappingExtension(varElement, dataType, jsonConnName, fullJsonPath, options);
                             mappedCount++;
                         }
+                        else
+                        {
+                            _logger.LogTrace("Pas de Datapoint trouvé dans le JSON pour : Connexion={Conn}, Path={Path}", jsonConnName, fullJsonPath);
+                        }
                     }
                 }
-
+                
+                _logger.LogInformation("Fin du mapping. {MappedCount} variables OPC UA ont été associées à un Datapoint.", mappedCount);
                 using var memoryStream = new MemoryStream();
                 doc.Save(memoryStream);
 

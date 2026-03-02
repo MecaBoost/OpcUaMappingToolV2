@@ -11,15 +11,23 @@ namespace OpcUaMappingTool.Backend.Services
         private static readonly XNamespace NsUa = "http://opcfoundation.org/UA/2011/03/UANodeSet.xsd";
         private static readonly XName UAObjectName = NsUa + "UAObject";
         private static readonly XName ReferenceName = NsUa + "Reference";
+        private readonly ILogger<OpcUaAssetExtractionService> _logger;
+
+        public OpcUaAssetExtractionService(ILogger<OpcUaAssetExtractionService> logger)
+        {
+            _logger = logger;
+        }
 
         // =========================================================
         // EXTRACTION XML (Sécurisée avec OpcUaXmlHelper)
         // =========================================================
         public async Task<List<string>> ExtractXmlAssetsAsync(Stream xmlStream)
         {
+            _logger.LogInformation("Démarrage de l'extraction des assets XML...");
             var doc = await XDocument.LoadAsync(xmlStream, LoadOptions.None, default);
             
             var allObjects = doc.Descendants(UAObjectName).ToList();
+            _logger.LogDebug("{Count} objets 'UAObject' trouvés dans le XML.", allObjects.Count);
             
             var nodesById = doc.Descendants().Where(e => e.Attribute("NodeId") != null)
                                .ToDictionary(e => e.Attribute("NodeId")!.Value, e => e);
@@ -57,7 +65,7 @@ namespace OpcUaMappingTool.Backend.Services
 
             var targetNodeIds = level1Assets.ToHashSet();
 
-            return allObjects.Where(obj => targetNodeIds.Contains(obj.Attribute("NodeId")?.Value ?? ""))
+            var results = allObjects.Where(obj => targetNodeIds.Contains(obj.Attribute("NodeId")?.Value ?? ""))
                              .Select(e => e.Attribute("BrowseName")?.Value)
                              .Where(v => !string.IsNullOrEmpty(v))
                              // Remplacement de Split(':').Last() par le Helper sécurisé
@@ -65,6 +73,9 @@ namespace OpcUaMappingTool.Backend.Services
                              .Distinct()
                              .OrderBy(v => v) 
                              .ToList();
+
+            _logger.LogInformation("Extraction XML terminée. {Count} équipements valides trouvés.", results.Count);
+            return results;
         }
 
         // =========================================================
@@ -79,7 +90,11 @@ namespace OpcUaMappingTool.Backend.Services
             var root = await JsonSerializer.DeserializeAsync<JsonRoot>(jsonStream, jsonOptions);
             var connections = root?.Configs?.FirstOrDefault()?.Config?.Connections;
 
-            if (connections == null) return new Dictionary<string, List<string>>();
+            if (connections == null) 
+            {
+                _logger.LogWarning("Aucune connexion trouvée dans le fichier JSON.");
+                return new Dictionary<string, List<string>>();
+            }
 
             // 2. Traitement des données
             foreach (var conn in connections)
@@ -110,6 +125,7 @@ namespace OpcUaMappingTool.Backend.Services
             }
             
             // 3. Conversion finale pour l'affichage (Tri alphabétique)
+            _logger.LogInformation("Extraction JSON terminée avec succès.");
             return tempResult.ToDictionary(k => k.Key, v => v.Value.OrderBy(p => p).ToList());
         }
     }
