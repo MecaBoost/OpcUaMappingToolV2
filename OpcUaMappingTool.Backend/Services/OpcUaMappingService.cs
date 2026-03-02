@@ -6,12 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Extensions.Logging;
-using OpcUaMappingTool.Web.Models;
-using OpcUaMappingTool.Web.Models.Dtos;
-using OpcUaMappingTool.Web.Services.Interfaces;
-using OpcUaMappingTool.Web.Utils;
+using OpcUaMappingTool.Backend.Services.Interfaces;
+using OpcUaMappingTool.Backend.Utils;
 
-namespace OpcUaMappingTool.Web.Services
+namespace OpcUaMappingTool.Backend.Services
 {
     public class OpcUaMappingService : IOpcUaMappingService
     {

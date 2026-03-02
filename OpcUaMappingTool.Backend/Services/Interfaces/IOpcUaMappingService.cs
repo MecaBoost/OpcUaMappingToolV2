@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using OpcUaMappingTool.Web.Models;
+using OpcUaMappingTool.Backend.Models;
 
-namespace OpcUaMappingTool.Web.Services.Interfaces
+namespace OpcUaMappingTool.Backend.Services.Interfaces
 {
     public interface IOpcUaMappingService
     {

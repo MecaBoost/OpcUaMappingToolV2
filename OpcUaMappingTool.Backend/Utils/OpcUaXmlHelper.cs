@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace OpcUaMappingTool.Web.Utils
+namespace OpcUaMappingTool.Backend.Utils
 {
     public static class OpcUaXmlHelper
     {

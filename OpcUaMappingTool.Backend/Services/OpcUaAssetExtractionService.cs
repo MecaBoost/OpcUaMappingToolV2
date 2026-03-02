@@ -7,7 +7,7 @@ using System.Xml.Linq;
 using OpcUaMappingTool.Web.Models.Dtos;
 using OpcUaMappingTool.Web.Utils;
 
-namespace OpcUaMappingTool.Web.Services
+namespace OpcUaMappingTool.Backend.Services
 {
     public class OpcUaAssetExtractionServiceV2
     {
