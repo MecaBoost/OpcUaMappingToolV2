@@ -6,7 +6,7 @@ namespace OpcUaMappingTool.Backend.Services
 {
     public class WorkspaceService : IWorkspaceService
     {
-        private readonly string _basePath = Path.Combine(Directory.GetCurrentDirectory(), "_workspaces");
+        private readonly string _basePath = Path.Combine(Path.GetTempPath(), "OpcUaMappingTool_Workspaces");
 
         public WorkspaceService()
         {
