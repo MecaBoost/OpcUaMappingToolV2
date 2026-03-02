@@ -1,0 +1,166 @@
+/* =========================================================
+   Thème : Dashboard Industriel / OpcUa Mapping Tool
+   ========================================================= */
+
+:root {
+  /* Palette de couleurs basée sur les interfaces Edge/Databus */
+  --primary-color: #007a88; /* Accent (ex: Teal/Cyan industriel) */
+  --primary-hover: #005f6b;
+  --bg-color: #f4f7f9;
+  --card-bg: #ffffff;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --border-color: #e2e8f0;
+  --success-color: #38a169;
+  --danger-color: #e53e3e;
+  --font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+/* --- Base --- */
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  margin: 0;
+  padding: 24px;
+  line-height: 1.5;
+}
+
+/* --- Conteneurs & Cartes --- */
+.container, #app, main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card, section, .panel, div[id$="-section"] {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+}
+
+/* --- Typographie --- */
+h1, h2, h3 {
+  color: var(--text-main);
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+h2 { font-size: 1.25rem; color: var(--primary-color); }
+
+/* --- Boutons --- */
+button, .btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+button:hover, .btn:hover {
+  background-color: var(--primary-hover);
+  box-shadow: var(--shadow-md);
+}
+
+button:disabled {
+  background-color: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* --- Formulaires --- */
+input[type="text"], 
+input[type="number"], 
+input[type="password"],
+select, 
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--text-main);
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 122, 136, 0.15);
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.form-group, .input-group, div > label {
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* --- Tables (Crucial pour le Mapping OPC UA) --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  background-color: var(--card-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+}
+
+th {
+  background-color: #f8fafc;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 12px;
+}
+
+tr:hover td {
+  background-color: #f1f5f9;
+}
+
+/* --- Messages de statut --- */
+.status-success, .alert-success { 
+  color: var(--success-color); 
+  background-color: #e6ffed;
+  padding: 10px;
+  border-radius: 4px;
+  border-left: 4px solid var(--success-color);
+}
+
+.status-error, .alert-error { 
+  color: var(--danger-color); 
+  background-color: #fff5f5;
+  padding: 10px;
+  border-radius: 4px;
+  border-left: 4px solid var(--danger-color);
+}
