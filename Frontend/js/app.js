@@ -1,5 +1,5 @@
 // Remplacez 5000 par le port réel de votre API C# (ex: 5169, 5001...)
-const API_BASE_URL = 'http://localhost:5000/api/Mapping';
+const API_BASE_URL = 'http://localhost:5044/api/Mapping';
 
 // État de l'application
 let sessionId = null;
